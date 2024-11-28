@@ -1,6 +1,7 @@
 ﻿using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using GrpcProductDemo.Protos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GrpcProductDemo.Services;
 
@@ -19,6 +20,7 @@ public class ProductService : ProductProtoService.ProductProtoServiceBase
         return Task.FromResult(product);
     }
 
+    [Authorize]
     public override Task<ProductListResponse> ListProduct(Empty request, ServerCallContext context)
     {
         var response = new ProductListResponse();
@@ -32,6 +34,7 @@ public class ProductService : ProductProtoService.ProductProtoServiceBase
         return Task.FromResult(response);
     }
 
+    [Authorize]
     public override Task<Product> CreateProduct(CreateProductRequest request, ServerCallContext context)
     {
         var newProduct = new Product()
